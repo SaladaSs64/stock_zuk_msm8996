@@ -2211,7 +2211,7 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
 	if (status)
 		goto free_padding_pkt;
 	netif_info(dev, probe, dev->net,
-		   "register '%s' at usb-%s-%s, %s, %pM\n",
+		   "register '%s' at usb-%s-%s, %s, %pKM\n",
 		   udev->dev.driver->name,
 		   xdev->bus->bus_name, xdev->devpath,
 		   dev->driver_info->description,
@@ -2279,7 +2279,7 @@ free_urb:
 unbind:
 	if (info->unbind)
 		info->unbind (dev, udev);
-out1:
+free_netdevice:
 	/* subdrivers must undo all they did in bind() if they
 	 * fail it, but we may fail later and a deferred kevent
 	 * may trigger an error resubmitting itself and, worse,
@@ -2647,3 +2647,4 @@ module_exit(usbnet_exit);
 MODULE_AUTHOR("David Brownell");
 MODULE_DESCRIPTION("USB network driver framework");
 MODULE_LICENSE("GPL");
+
